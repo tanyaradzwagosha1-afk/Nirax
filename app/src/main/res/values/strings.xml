@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Nirax</string>
+    <string name="nav_feed">Feed</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_chats">Chats</string>
+    <string name="nav_profile">Profile</string>
+    <string name="auth_headline">Connect in real time on Nirax</string>
+    <string name="auth_subhead">Share updates, join live threads, and message people directly without the noise.</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="sign_out">Sign out</string>
+    <string name="compose_post">New post</string>
+    <string name="new_message">New chat</string>
+    <string name="feed_empty_title">Start the conversation</string>
+    <string name="feed_empty_body">Publish the first update or question to spark a thread in the community.</string>
+    <string name="chats_empty_title">No conversations yet</string>
+    <string name="chats_empty_body">Pick someone from Discover or tap New chat to send a direct message.</string>
+    <string name="discover_empty_title">No matching people</string>
+    <string name="discover_empty_body">Try another name or handle, or invite teammates to join Nirax.</string>
+    <string name="placeholder_author_name">Nirax Member</string>
+    <string name="placeholder_post_content">Post content unavailable</string>
+</resources>

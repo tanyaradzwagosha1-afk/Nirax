@@ -1,0 +1,158 @@
+{
+  "entities": {
+    "PrivateUser": {
+      "title": "PrivateUser",
+      "description": "Private authenticated user account metadata containing PII such as email.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "Display name" },
+        "handle": { "type": "string", "description": "Unique social handle starting with @" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["userId", "email", "displayName", "handle", "createdAt", "updatedAt"]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Public discoverable social profile without PII.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Display name" },
+        "handle": { "type": "string", "description": "Social handle" },
+        "bio": { "type": "string", "description": "Short user bio" },
+        "statusNote": { "type": "string", "description": "Current communication status note" },
+        "avatarIndex": { "type": "integer", "description": "Curated avatar theme palette index (0-5)" },
+        "online": { "type": "boolean", "description": "Whether the user is available for chat" },
+        "discoverable": { "type": "boolean", "description": "Whether the profile appears in user discovery" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["userId", "displayName", "handle", "bio", "statusNote", "avatarIndex", "online", "discoverable", "createdAt", "updatedAt"]
+    },
+    "FollowingRecord": {
+      "title": "FollowingRecord",
+      "description": "Record of a user that the owner follows.",
+      "type": "object",
+      "properties": {
+        "targetUid": { "type": "string", "description": "UID of the followed user" },
+        "targetName": { "type": "string", "description": "Display name of the followed user" },
+        "targetHandle": { "type": "string", "description": "Handle of the followed user" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server follow timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["targetUid", "targetName", "targetHandle", "createdAt"]
+    },
+    "LikedPostRecord": {
+      "title": "LikedPostRecord",
+      "description": "Record of a post liked by the owner.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user who liked the post" },
+        "postId": { "type": "string", "description": "ID of the liked post" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server like timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["userId", "postId", "createdAt"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Community feed post created by a Nirax user.",
+      "type": "object",
+      "properties": {
+        "authorId": { "type": "string", "description": "UID of the post author" },
+        "authorName": { "type": "string", "description": "Display name of the author" },
+        "authorHandle": { "type": "string", "description": "Handle of the author" },
+        "authorAvatarIndex": { "type": "integer", "description": "Author avatar palette index (0-5)" },
+        "content": { "type": "string", "description": "Post text content" },
+        "category": { "type": "string", "enum": ["Discussion", "Update", "Question", "Showcase"], "description": "Topic category" },
+        "likesCount": { "type": "integer", "description": "Total like count" },
+        "commentsCount": { "type": "integer", "description": "Total comment count" },
+        "visibility": { "type": "string", "enum": ["public"], "description": "Post visibility" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["authorId", "authorName", "authorHandle", "authorAvatarIndex", "content", "category", "likesCount", "commentsCount", "visibility", "createdAt", "updatedAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Reply comment on a community post.",
+      "type": "object",
+      "properties": {
+        "postId": { "type": "string", "description": "Parent post ID" },
+        "authorId": { "type": "string", "description": "UID of the commenter" },
+        "authorName": { "type": "string", "description": "Display name of the commenter" },
+        "authorHandle": { "type": "string", "description": "Handle of the commenter" },
+        "authorAvatarIndex": { "type": "integer", "description": "Commenter avatar palette index (0-5)" },
+        "text": { "type": "string", "description": "Comment body" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["postId", "authorId", "authorName", "authorHandle", "authorAvatarIndex", "text", "createdAt"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Two-party direct messaging thread.",
+      "type": "object",
+      "properties": {
+        "participantIds": { "type": "array", "description": "Two distinct participant UIDs" },
+        "participantNames": { "type": "object", "description": "Map of UID to display name" },
+        "participantHandles": { "type": "object", "description": "Map of UID to handle" },
+        "participantAvatars": { "type": "object", "description": "Map of UID to avatar index" },
+        "lastMessageText": { "type": "string", "description": "Preview of the latest message" },
+        "lastMessageSenderId": { "type": "string", "description": "UID of the latest message sender" },
+        "lastMessageAt": { "type": "string", "format": "date-time", "description": "Server timestamp of latest message (FieldValue.serverTimestamp())" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["participantIds", "participantNames", "participantHandles", "participantAvatars", "lastMessageText", "lastMessageSenderId", "lastMessageAt", "createdAt", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Direct message inside a conversation.",
+      "type": "object",
+      "properties": {
+        "conversationId": { "type": "string", "description": "Parent conversation ID" },
+        "senderId": { "type": "string", "description": "UID of the sender" },
+        "senderName": { "type": "string", "description": "Display name of the sender" },
+        "participantIds": { "type": "array", "description": "Denormalized participant UIDs for list rule evaluation" },
+        "text": { "type": "string", "description": "Message text content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["conversationId", "senderId", "senderName", "participantIds", "text", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/PrivateUser" },
+      "description": "Owner-only private account data containing PII."
+    },
+    "/users/{userId}/following/{targetUid}": {
+      "schema": { "$ref": "#/entities/FollowingRecord" },
+      "description": "Users followed by the owner."
+    },
+    "/users/{userId}/liked_posts/{postId}": {
+      "schema": { "$ref": "#/entities/LikedPostRecord" },
+      "description": "Posts liked by the owner."
+    },
+    "/public_profiles/{userId}": {
+      "schema": { "$ref": "#/entities/PublicProfile" },
+      "description": "Discoverable non-PII social profiles."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Public community feed posts."
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/Comment" },
+      "description": "Threaded replies on a post."
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "Direct message conversation threads."
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Direct messages within a conversation."
+    }
+  }
+}
